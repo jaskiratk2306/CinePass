@@ -1,0 +1,32 @@
+{
+  "name": "cinema-ticket-booking-system",
+  "version": "1.0.0",
+  "description": "Full-stack Cinema Hall Ticket Booking System with strong concurrency & consistency",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev": "npm --prefix backend run dev",
+    "build": "npm --prefix backend run build && npm --prefix frontend run build",
+    "test": "npm --prefix backend test",
+    "test:coverage": "npm --prefix backend run test:coverage",
+    "db:migrate": "npm --prefix backend run db:migrate",
+    "db:seed": "npm --prefix backend run db:seed",
+    "db:studio": "npm --prefix backend run db:studio"
+  },
+  "keywords": [
+    "cinema",
+    "booking",
+    "express",
+    "react",
+    "prisma",
+    "postgresql",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC"
+}

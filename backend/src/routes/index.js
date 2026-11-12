@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import authRoutes from './authRoutes.js';
 import catalogRoutes from './catalogRoutes.js';
+import bookingRoutes from './bookingRoutes.js';
 import adminRoutes from './adminRoutes.js';
 import { requireAuth, requireRole } from '../middlewares/auth.js';
 
@@ -16,6 +17,9 @@ router.use('/auth', authRoutes);
 
 // Public catalog endpoints (movies, shows, seat map)
 router.use('/', catalogRoutes);
+
+// User booking flow endpoints (holds, bookings, cancel, me)
+router.use('/', bookingRoutes);
 
 // Admin catalog & management endpoints
 router.use('/admin', adminRoutes);

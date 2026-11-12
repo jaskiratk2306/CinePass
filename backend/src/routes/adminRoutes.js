@@ -21,6 +21,7 @@ import {
   updateShow,
   deleteShow,
 } from '../controllers/adminCatalogController.js';
+import { validateTicketController } from '../controllers/adminTicketController.js';
 import {
   createMovieSchema,
   updateMovieSchema,
@@ -33,11 +34,15 @@ import {
   createShowSchema,
   updateShowSchema,
 } from '../validators/adminValidators.js';
+import { validateTicketSchema } from '../validators/bookingValidators.js';
 
 const router = Router();
 
 // Server-side ADMIN role middleware on ALL routes under /api/admin
 router.use(requireAuth, requireRole('ADMIN'));
+
+// --- Ticket Validation ---
+router.post('/tickets/validate', validate({ body: validateTicketSchema }), validateTicketController);
 
 // --- Movies ---
 router.post('/movies', validate({ body: createMovieSchema }), createMovie);

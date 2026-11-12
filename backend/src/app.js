@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import swaggerUi from 'swagger-ui-express';
 import apiRoutes from './routes/index.js';
+import { openapiSpec } from './docs/openapi.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { NotFoundError } from './errors/AppError.js';
 import { ENV } from './config/env.js';
@@ -17,6 +19,15 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+
+// OpenAPI Swagger UI Documentation
+app.get('/api/docs/json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(openapiSpec);
+});
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openapiSpec, {
+  customSiteTitle: 'Cinema Booking API Documentation',
+}));
 
 // API Routes
 app.use('/api', apiRoutes);

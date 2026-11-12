@@ -23,6 +23,10 @@ import {
 } from '../controllers/adminCatalogController.js';
 import { validateTicketController } from '../controllers/adminTicketController.js';
 import {
+  getOccupancyReportController,
+  getAuditLogsController,
+} from '../controllers/reportController.js';
+import {
   createMovieSchema,
   updateMovieSchema,
   createGenreSchema,
@@ -35,6 +39,10 @@ import {
   updateShowSchema,
 } from '../validators/adminValidators.js';
 import { validateTicketSchema } from '../validators/bookingValidators.js';
+import {
+  occupancyReportQuerySchema,
+  auditLogsQuerySchema,
+} from '../validators/reportValidators.js';
 
 const router = Router();
 
@@ -43,6 +51,10 @@ router.use(requireAuth, requireRole('ADMIN'));
 
 // --- Ticket Validation ---
 router.post('/tickets/validate', validate({ body: validateTicketSchema }), validateTicketController);
+
+// --- Reports & Audit Logs ---
+router.get('/reports/occupancy', validate({ query: occupancyReportQuerySchema }), getOccupancyReportController);
+router.get('/audit-logs', validate({ query: auditLogsQuerySchema }), getAuditLogsController);
 
 // --- Movies ---
 router.post('/movies', validate({ body: createMovieSchema }), createMovie);

@@ -4,6 +4,7 @@ import {
   listShows,
   getShowSeatMap,
 } from '../services/catalogService.js';
+import { listAllGenres } from '../services/adminCatalogService.js';
 
 export async function getMovies(req, res, next) {
   try {
@@ -37,6 +38,16 @@ export async function getSeatMap(req, res, next) {
     const currentUserId = req.user?.id || null;
     const seatMap = await getShowSeatMap(req.params.id, currentUserId);
     return res.status(200).json({ data: seatMap });
+  } catch (err) {
+    return next(err);
+  }
+}
+
+
+export async function getPublicGenres(req, res, next) {
+  try {
+    const genres = await listAllGenres();
+    return res.status(200).json({ data: genres });
   } catch (err) {
     return next(err);
   }

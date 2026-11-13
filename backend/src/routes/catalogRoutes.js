@@ -4,6 +4,7 @@ import {
   getMovie,
   getShows,
   getSeatMap,
+  getPublicGenres,
 } from '../controllers/catalogController.js';
 import { validate } from '../middlewares/validate.js';
 import { optionalAuth } from '../middlewares/auth.js';
@@ -43,5 +44,8 @@ router.get(
   validate({ params: showIdParamSchema }),
   getSeatMap
 );
+
+// Public Genres (for homepage filter pills - no auth required)
+router.get('/genres', getPublicGenres);
 
 export default router;

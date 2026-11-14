@@ -142,9 +142,22 @@ npm run dev
 3. Run migrations and seed:
    ```bash
    cd backend
+   npx prisma generate
    npx prisma migrate deploy
    node prisma/seed.js
    ```
+
+### Option C: Cloud Deployment (Render + Neon + Vercel)
+- **Database (Neon)**: Create a project on [neon.tech](https://neon.tech) and copy the PostgreSQL connection string.
+- **Backend (Render)**:
+  - Root directory: `backend`
+  - Build command: `npm install && npm run deploy:prod`
+  - Start command: `npm start`
+  - Environment variables: `DATABASE_URL`, `JWT_SECRET`, `CLIENT_URL`
+- **Frontend (Vercel)**:
+  - Root directory: `frontend`
+  - Build command: `npm run build`
+  - Environment variables: `VITE_API_URL=https://<your-render-backend-url>/api`
 
 ### Running Frontend & Backend
 ```bash

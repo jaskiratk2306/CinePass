@@ -17,10 +17,15 @@ const frontendDistPath = path.resolve(__dirname, '../../frontend/dist');
 
 const app = express();
 
-// Standard middlewares
+// Standard middlewares: CORS allows all Vercel, Render, local and configured origins
 app.use(
   cors({
-    origin: [ENV.CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like curl, Postman, mobile)
+      if (!origin) return callback(null, true);
+      // Dynamically reflect origin to allow Vercel, localhost, and custom domains
+      return callback(null, true);
+    },
     credentials: true,
   })
 );

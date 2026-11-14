@@ -1,7 +1,17 @@
 /**
  * Universal API client for backend requests
  */
-const BASE_URL = import.meta.env.VITE_API_URL || '/api';
+function getBaseUrl() {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (!envUrl) return '/api';
+  let clean = envUrl.trim().replace(/\/+$/, '');
+  if (!clean.endsWith('/api')) {
+    clean += '/api';
+  }
+  return clean;
+}
+
+const BASE_URL = getBaseUrl();
 
 export async function apiRequest(endpoint, { method = 'GET', body = null, headers = {} } = {}) {
   const token = localStorage.getItem('token');
@@ -21,7 +31,8 @@ export async function apiRequest(endpoint, { method = 'GET', body = null, header
     config.body = JSON.stringify(body);
   }
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, config);
+  const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const response = await fetch(`${BASE_URL}${path}`, config);
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
